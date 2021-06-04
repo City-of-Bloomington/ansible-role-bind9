@@ -1,0 +1,5 @@
+zone "<name>" IN {
+     type slave;
+     file "/var/cache/bind/<name>";
+     masters { masterIP; };
+};

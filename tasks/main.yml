@@ -1,0 +1,28 @@
+---
+- name: Install bind9
+  ansible.builtin.package:
+    name:
+      - bind9
+      - bind9utils
+      - bind9-doc
+      - dnsutils
+    state: latest
+
+- name: "Open DNS port in firewall"
+  ufw:
+    rule: "allow"
+    port: "53"
+
+- name: "Copy config file to /etc/bind"
+  copy:
+    src: ../files/bind9/named.conf.local
+    dest: /etc/bind/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "Restart BIND9"
+  service:
+    name: bind9
+    state: restarted
+...
